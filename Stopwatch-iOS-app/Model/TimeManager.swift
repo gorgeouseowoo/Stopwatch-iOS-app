@@ -16,8 +16,13 @@ class TimeManager: ObservableObject {
     @Published var lapTime: TimeInterval = 0.0
     @Published var laps: [Lap] = []
     
-   
     
+    // dropLast 추가하고 싶다..
+//    @Published var laps: [Lap] = []
+//    @Published var laps = laps.dropLast()
+
+    
+   
     func timeString(from time: TimeInterval) -> String {
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60
@@ -53,16 +58,20 @@ class TimeManager: ObservableObject {
     
     func addLap() {
         lapTime = 0.0
-        laps.append(Lap(index: laps.count + 1, time: lapTime))
+        laps.append(Lap(index: laps.count + 1, time: lapTime)) 
         
     }
-    
     func color(for lap: Lap) -> Color {
-        guard laps.count > 2 else {
+        
+        // 마지막 lap에는 색상이 적용되면 안된다
+        let lapsWithoutLast = laps.dropLast()
+        
+        guard lapsWithoutLast.count > 2 else {
             return .white
         }
-        guard let minTime = laps.map({ $0.time }).min(),
-              let maxTime = laps.map({ $0.time }).max() else {
+    
+        guard let minTime = lapsWithoutLast.map({ $0.time }).min(),
+              let maxTime = lapsWithoutLast.map({ $0.time }).max() else {
             return .white
         }
 
