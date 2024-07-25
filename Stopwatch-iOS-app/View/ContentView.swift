@@ -16,17 +16,14 @@ struct ContentView: View {
             Color(.black)
                 .ignoresSafeArea()
             
-            // light든 dark든 상관없이 dark를 설정할 수 있음
-            // info.plist
-            // 모드 고정하기
-            // mc2 적용하기 !!!!!!!!!!!!!
-
+        
             VStack {
                 Spacer()
                 Text(timeManager.timeString(from:timeManager.mainTime ))
                     .font(.system(size: 80))
                     .fontWeight(.ultraLight)
                     .foregroundStyle(.white)
+                    .monospacedDigit() // 시간폭 고정
                 
                 HStack {
                     Button {
